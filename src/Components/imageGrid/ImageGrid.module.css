@@ -1,9 +1,18 @@
 .grid__container {
-  width: 18rem;
-  height: 24rem;
+  width: 32rem;
+  height: 25rem;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
   grid-gap: 1rem;
+}
+
+.image__container {
+  width: 7rem;
+}
+
+.correct__image {
+  position: absolute;
+  top: 0;
 }
 
 .heading {
@@ -18,7 +27,7 @@
   text-align: center;
   color: var(--primary-color);
   animation: moveUpward 4s linear;
-  transition: all 4s ease-in-out;
+  transition: all 3s ease-in-out;
 }
 .playCounter {
   font-size: 5rem;
@@ -28,7 +37,7 @@
 @keyframes moveUpward {
   from {
     position: absolute;
-    top: 20rem;
+    top: 10rem;
   }
   to {
     position: absolute;
@@ -43,4 +52,17 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+@media screen and (max-width: 500px) {
+  .grid__container {
+    width: 19rem;
+    height: 19rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(4rem, 1fr));
+    grid-gap: 1rem;
+  }
+  .image__container {
+    width: 4rem;
+  }
 }

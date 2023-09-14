@@ -1,7 +1,9 @@
 const CanvasCounter = () => {
   return (
     <div>
-      <canvas className="canvas__counter"></canvas>
+      <div className="canvas__counter">
+        <div className="timer"></div>
+      </div>
     </div>
   );
 };

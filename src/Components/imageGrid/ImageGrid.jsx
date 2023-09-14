@@ -1,7 +1,8 @@
 import { useEffect, useReducer } from "react";
-import { firstSetImages } from "../../Data/imageDataSet";
+import { firstSetImages, secondSetImages } from "../../Data/imageDataSet";
 import styles from "./ImageGrid.module.css";
 import { assembleRandomly } from "../../utils/randomImageFunc";
+import { usePointContext } from "../../Context/pointContext";
 
 const INITIAL__STATE = {
   prevImage: -1,
@@ -9,6 +10,7 @@ const INITIAL__STATE = {
   suffeledImageArray: [],
   hideImage: false,
   counter: 3,
+  isCompleted: false,
 };
 
 const reducerFunc = (state, { type, payload }) => {
@@ -17,6 +19,7 @@ const reducerFunc = (state, { type, payload }) => {
       return {
         ...state,
         suffeledImageArray: [...payload],
+        isCompleted: false,
       };
     }
     case "PICK__THE__CARD": {
@@ -59,12 +62,16 @@ const reducerFunc = (state, { type, payload }) => {
     }
 
     case "CHECK__IF__IMAGES__MATCHES": {
+      const { image, setPoints, points } = payload;
+
       if (state.prevImage === state.currentImage) {
         const result = [...state.suffeledImageArray].map((eachImage) =>
-          eachImage.keyToMatchImage === payload.keyToMatchImage
+          eachImage.keyToMatchImage === image.keyToMatchImage
             ? { ...eachImage, isShow: true }
             : { ...eachImage }
         );
+
+        setPoints(points + 7);
 
         return {
           ...state,
@@ -72,8 +79,30 @@ const reducerFunc = (state, { type, payload }) => {
           prevImage: -1,
           currentImage: -1,
         };
+      } else {
+        const result = [...state.suffeledImageArray].map((eachImage) =>
+          eachImage.keyToMatchImage === image.keyToMatchImage ||
+          eachImage.keyToMatchImage === state.prevImage
+            ? { ...eachImage, isShow: false }
+            : { ...eachImage }
+        );
+        return {
+          ...state,
+          suffeledImageArray: result,
+          prevImage: -1,
+          currentImage: -1,
+        };
       }
-      return;
+    }
+    case "CHECK__IF__PUZZLE__COMPLETED": {
+      const result = [...state.suffeledImageArray].filter(
+        (eachImage) => eachImage.isShow === false
+      );
+      return {
+        ...state,
+        isCompleted: result.length === 0 ? true : false,
+        hideImage: result.length === 0 ? false : true,
+      };
     }
 
     default:
@@ -82,8 +111,8 @@ const reducerFunc = (state, { type, payload }) => {
 };
 
 const ImageGrid = () => {
+  const { setPoints, points, setTimer, timer } = usePointContext();
   const [state, dispatch] = useReducer(reducerFunc, INITIAL__STATE);
-  console.log("🚀 ~ file: ImageGrid.jsx:26 ~ ImageGrid ~ state:", state);
 
   //this useEffect works on generating the image puzzle
   useEffect(() => {
@@ -94,13 +123,27 @@ const ImageGrid = () => {
     });
   }, []);
 
+  useEffect(() => {
+    const result = assembleRandomly(secondSetImages);
+    if (state?.isCompleted) {
+      setTimeout(() => {
+        dispatch({
+          type: "SAVE__SUFFELED__IMAGE__ARRAY",
+          payload: result,
+        });
+      }, 1000);
+    }
+  }, [state?.isCompleted]);
+
   //this useEffect works on generating the player counter
   useEffect(() => {
     const intervalId = setInterval(() => {
       if (state.counter > 0) {
-        dispatch({
-          type: "START__PLAY__COUNTER",
-        });
+        setTimeout(() => {
+          dispatch({
+            type: "START__PLAY__COUNTER",
+          });
+        }, 200);
       }
     }, 1000);
 
@@ -114,7 +157,16 @@ const ImageGrid = () => {
       dispatch({ type: "PICK__THE__CARD" });
     }, 7000);
     return () => clearTimeout(intervalId);
-  }, []);
+  }, [state.isCompleted]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (timer > 0 && state.hideImage) {
+        setTimer(timer - 1);
+      }
+    }, 1000);
+    return () => clearInterval(intervalId);
+  }, [state.hideImage, timer]);
 
   const handleMatchImage = (image) => {
     if (state.prevImage === -1) {
@@ -131,14 +183,17 @@ const ImageGrid = () => {
       setTimeout(() => {
         dispatch({
           type: "CHECK__IF__IMAGES__MATCHES",
-          payload: image,
+          payload: { image: image, setPoints: setPoints, points: points },
         });
-      }, 100);
+        dispatch({
+          type: "CHECK__IF__PUZZLE__COMPLETED",
+        });
+      }, 700);
     }
   };
 
   return (
-    <>
+    <div>
       {state.counter === 0 && (
         <h1 className={styles.heading}>
           {!state?.hideImage ? "Remember the Card" : "Pick The Cards"}
@@ -148,22 +203,28 @@ const ImageGrid = () => {
         {state.counter === 0 ? (
           <div className={styles.grid__container}>
             {state?.suffeledImageArray.map((eachImage) => (
-              <img
-                key={eachImage.id}
-                src={
-                  !state?.hideImage || eachImage.isShow
-                    ? eachImage.img
-                    : "/Image/close-stone.png"
-                }
-                alt="game__pattern"
-                value={eachImage.img}
-                onClick={
-                  !state?.hideImage
-                    ? () => dispatch({ type: "PICK__THE__CARD" })
-                    : () => handleMatchImage(eachImage)
-                }
-              />
+              <div key={eachImage.id} className={styles.image__container}>
+                <img
+                  src={
+                    !state?.hideImage || eachImage.isShow
+                      ? eachImage.img
+                      : "/Image/close-stone.png"
+                  }
+                  alt="game__pattern"
+                  value={eachImage.img}
+                  onClick={
+                    !state?.hideImage
+                      ? () => dispatch({ type: "PICK__THE__CARD" })
+                      : () => handleMatchImage(eachImage)
+                  }
+                />
+              </div>
             ))}
+            {state?.isCompleted && (
+              <div className={styles.correct__image}>
+                <img src="/Image/right.png" alt="" />
+              </div>
+            )}
           </div>
         ) : (
           <>
@@ -174,7 +235,7 @@ const ImageGrid = () => {
           </>
         )}
       </div>
-    </>
+    </div>
   );
 };
 
