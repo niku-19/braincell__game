@@ -1,0 +1,46 @@
+.grid__container {
+  width: 18rem;
+  height: 24rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 1rem;
+}
+
+.heading {
+  text-align: center;
+  font-size: 3rem;
+  color: var(--primary-color);
+  margin-top: 1rem;
+}
+
+.remember__text {
+  font-size: 3rem;
+  text-align: center;
+  color: var(--primary-color);
+  animation: moveUpward 4s linear;
+  transition: all 4s ease-in-out;
+}
+.playCounter {
+  font-size: 5rem;
+  color: var(--primary-color);
+}
+
+@keyframes moveUpward {
+  from {
+    position: absolute;
+    top: 20rem;
+  }
+  to {
+    position: absolute;
+    top: 5rem;
+  }
+}
+
+.start__game {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

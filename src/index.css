@@ -1,0 +1,92 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+  border: 0;
+  outline: 0 solid transparent;
+}
+
+:root {
+  --container-width-lg: 50%;
+  --container-width-md: 76%;
+  --container-width-sm: 100%;
+  --container-width-ssm: 100%;
+  --primary-color: #441306;
+}
+
+html {
+  font-size: 62.5%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+body {
+  line-height: 1;
+  background-color: #1e292e;
+  color: whitesmoke;
+}
+
+.container {
+  max-width: var(--container-width-lg);
+  height: calc(100vh - 2rem);
+  margin: 1rem auto;
+  background: url("/Image/background.png") no-repeat center center fixed;
+  background-size: 100% 100%;
+}
+
+.center {
+  width: 100%;
+  height: calc(100vh - 9rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+img {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+}
+
+.canvas__counter {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: hsl(121, 80%, 46%);
+  animation: clock 6s linear;
+  transform-origin: top;
+}
+
+@keyframes clock {
+  from {
+    background-color: hsl(121, 80%, 46%);
+  }
+  to {
+    background-color: #999;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .container {
+    max-width: var(--container-width-md);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .container {
+    max-width: var(--container-width-sm);
+    height: 100vh;
+    margin: 0;
+  }
+}
+@media screen and (max-width: 500px) {
+  .container {
+    max-width: var(--container-width-ssm);
+    height: 100vh;
+    margin: 0;
+  }
+}
