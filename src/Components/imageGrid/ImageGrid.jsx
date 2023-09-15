@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useReducer, useRef } from "react";
 import { firstSetImages, secondSetImages } from "../../Data/imageDataSet";
 import styles from "./ImageGrid.module.css";
@@ -73,7 +74,7 @@ const ImageGrid = () => {
       }
     }, 1000);
     return () => clearInterval(intervalId);
-  }, [state.hideImage, timer, isPaused]);
+  }, [state.hideImage, timer, isPaused, navigate]);
 
   const handleMatchImage = (image) => {
     if (state.prevImage === -1 && !image.isClicked) {
