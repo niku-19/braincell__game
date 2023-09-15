@@ -103,4 +103,14 @@ img {
     height: 100vh;
     margin: 0;
   }
+
+  .canvas__counter {
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: hsl(121, 80%, 46%);
+  }
 }
