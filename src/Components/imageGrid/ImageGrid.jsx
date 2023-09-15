@@ -38,6 +38,7 @@ const ImageGrid = () => {
 
   //this useEffect works on generating the player counter
   useEffect(() => {
+    gameStartRef.current.play();
     const intervalId = setInterval(() => {
       if (state.counter > 0) {
         setTimeout(() => {
@@ -45,7 +46,6 @@ const ImageGrid = () => {
             type: "START__PLAY__COUNTER",
           });
         }, 200);
-        gameStartRef.current.play();
       }
     }, 1000);
 
