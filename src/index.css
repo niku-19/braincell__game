@@ -88,6 +88,9 @@ img {
   .container {
     max-width: var(--container-width-md);
   }
+  html {
+    font-size: 57%;
+  }
 }
 
 @media screen and (max-width: 600px) {
@@ -96,8 +99,14 @@ img {
     height: 100vh;
     margin: 0;
   }
+  html {
+    font-size: 52%;
+  }
 }
 @media screen and (max-width: 500px) {
+  html {
+    font-size: 47%;
+  }
   .container {
     max-width: var(--container-width-ssm);
     height: 100vh;

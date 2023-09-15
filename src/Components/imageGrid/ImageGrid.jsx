@@ -1,13 +1,19 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useRef } from "react";
 import { firstSetImages, secondSetImages } from "../../Data/imageDataSet";
 import styles from "./ImageGrid.module.css";
 import { assembleRandomly } from "../../utils/randomImageFunc";
 import { usePointContext } from "../../Context/pointContext";
 import { INITIAL__STATE, reducerFunc } from "../../Reduer/game-reducer";
+import { useNavigate } from "react-router-dom";
 
 const ImageGrid = () => {
   const { setPoints, points, setTimer, timer, isPaused } = usePointContext();
   const [state, dispatch] = useReducer(reducerFunc, INITIAL__STATE);
+  const wrongAudioRef = useRef(null);
+  const flipAudioRef = useRef(null);
+  const gameStartRef = useRef(null);
+  const gameOverRef = useRef(null);
+  const navigate = useNavigate();
 
   //this useEffect works on generating the image puzzle
   useEffect(() => {
@@ -39,6 +45,7 @@ const ImageGrid = () => {
             type: "START__PLAY__COUNTER",
           });
         }, 200);
+        gameStartRef.current.play();
       }
     }, 1000);
 
@@ -58,18 +65,25 @@ const ImageGrid = () => {
     const intervalId = setInterval(() => {
       if (timer > 0 && state.hideImage && !isPaused) {
         setTimer(timer - 1);
+      } else if (timer === 0) {
+        gameOverRef.current.play();
+        setTimeout(() => {
+          navigate("/game-over");
+        }, 2000);
       }
     }, 1000);
     return () => clearInterval(intervalId);
   }, [state.hideImage, timer, isPaused]);
 
   const handleMatchImage = (image) => {
-    if (state.prevImage === -1) {
+    if (state.prevImage === -1 && !image.isClicked) {
       dispatch({ type: "SAVE__PREV__IMAGE", payload: image });
+      flipAudioRef.current.play();
       return;
     }
 
-    if (state.currentImage === -1) {
+    if (state.currentImage === -1 && !image.isClicked) {
+      flipAudioRef.current.play();
       dispatch({
         type: "SAVE__CURRENT__IMAGE",
         payload: image,
@@ -85,10 +99,30 @@ const ImageGrid = () => {
         });
       }, 700);
     }
+    wrongAudioRef.current.play();
   };
+
+  // const playAudio = () => {
+  //
+  // };
 
   return (
     <div>
+      <audio ref={wrongAudioRef}>
+        <source
+          src="/audio/WhatsApp Audio 2023-09-15 at 12.32.48.mp3"
+          type="audio/mpeg"
+        />
+      </audio>
+      <audio ref={gameStartRef}>
+        <source src="/public/audio/gave over.mp3" type="audio/mpeg" />
+      </audio>
+      <audio ref={flipAudioRef}>
+        <source src="/audio/book_page-45210.mp3" type="audio/mpeg" />
+      </audio>
+      <audio ref={gameOverRef}>
+        <source src="/audio/game finfish.wav" type="audio/mpeg" />
+      </audio>
       {state.counter === 0 && (
         <h1 className={styles.heading}>
           {!state?.hideImage ? "Remember the Card" : "Pick The Cards"}

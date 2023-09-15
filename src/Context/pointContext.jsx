@@ -8,10 +8,7 @@ const CalPointContextProvider = ({ children }) => {
   const [points, setPoints] = useState(0);
   const [timer, setTimer] = useState(90);
   const [isPaused, setIsPaused] = useState(false);
-  console.log(
-    "🚀 ~ file: pointContext.jsx:10 ~ CalPointContextProvider ~ timer:",
-    timer
-  );
+
   return (
     <PointContext.Provider
       value={{ points, setPoints, setTimer, timer, setIsPaused, isPaused }}

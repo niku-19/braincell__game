@@ -61,7 +61,7 @@ const reducerFunc = (state, { type, payload }) => {
       if (state.prevImage === state.currentImage) {
         const result = [...state.suffeledImageArray].map((eachImage) =>
           eachImage.keyToMatchImage === image.keyToMatchImage
-            ? { ...eachImage, isShow: true }
+            ? { ...eachImage, isShow: true, isClicked: true }
             : { ...eachImage }
         );
 
@@ -77,7 +77,7 @@ const reducerFunc = (state, { type, payload }) => {
         const result = [...state.suffeledImageArray].map((eachImage) =>
           eachImage.keyToMatchImage === image.keyToMatchImage ||
           eachImage.keyToMatchImage === state.prevImage
-            ? { ...eachImage, isShow: false }
+            ? { ...eachImage, isShow: false, isClicked: false }
             : { ...eachImage }
         );
         return {

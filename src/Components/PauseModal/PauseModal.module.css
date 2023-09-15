@@ -14,7 +14,7 @@
 
 .modal__container {
   width: 35%;
-  height: 40%;
+  height: 35%;
   background-color: #fff;
   border-radius: 4rem;
   box-shadow: 0 0 0 5px #fff;
@@ -50,6 +50,10 @@
 }
 
 .modal__footer {
+  position: absolute;
+  bottom: -2rem;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -71,4 +75,19 @@
   border: 5px solid whitesmoke;
   border-radius: 1rem;
   margin-top: 1.5rem;
+}
+
+@media screen and (max-width: 600px) {
+  .modal__container {
+    width: 60%;
+    height: 20%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .modal__container {
+    width: 90%;
+    height: max-content;
+    padding: 4rem 0;
+  }
 }

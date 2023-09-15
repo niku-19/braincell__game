@@ -1,12 +1,15 @@
-import Header from "./Components/header/Header";
-import ImageGrid from "./Components/imageGrid/ImageGrid";
+import { Route, Routes } from "react-router-dom";
+import HomePage from "./pages/Home/HomePage";
+import GameOver from "./pages/Game over/GameOver";
 
 function App() {
   return (
-    <div className="container">
-      <Header />
-      <ImageGrid />
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/game-over" element={<GameOver />} />
+      </Routes>
+    </>
   );
 }
 

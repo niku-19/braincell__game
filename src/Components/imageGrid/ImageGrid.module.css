@@ -54,7 +54,7 @@
   align-items: center;
 }
 
-@media screen and (max-width: 500px) {
+/* @media screen and (max-width: 500px) {
   .grid__container {
     width: 19rem;
     height: 19rem;
@@ -65,4 +65,4 @@
   .image__container {
     width: 4rem;
   }
-}
+} */

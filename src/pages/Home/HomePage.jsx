@@ -1,7 +1,11 @@
+import Header from "../../Components/header/Header";
+import ImageGrid from "../../Components/imageGrid/ImageGrid";
+
 const HomePage = () => {
   return (
-    <div>
-      <h1>Hello World</h1>
+    <div className="container">
+      <Header />
+      <ImageGrid />
     </div>
   );
 };

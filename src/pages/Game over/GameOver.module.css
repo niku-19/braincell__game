@@ -1,0 +1,22 @@
+.gameOver {
+  width: 100%;
+  height: calc(100vh - 9rem);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.gaveOver__text {
+  font-size: 5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--primary-color);
+}
+.gaveOver__points {
+  font-size: 4rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--primary-color);
+}
