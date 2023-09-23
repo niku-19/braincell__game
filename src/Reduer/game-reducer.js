@@ -5,6 +5,7 @@ const INITIAL__STATE = {
   hideImage: false,
   counter: 3,
   isCompleted: false,
+  currentLoad : 0
 };
 
 const reducerFunc = (state, { type, payload }) => {
@@ -32,7 +33,7 @@ const reducerFunc = (state, { type, payload }) => {
     case "SAVE__PREV__IMAGE": {
       const result = [...state.suffeledImageArray].map((eachImage) =>
         eachImage.id === payload.id
-          ? { ...eachImage, isShow: true }
+          ? { ...eachImage, isShow: true , isDisables : true }
           : { ...eachImage }
       );
       return {
@@ -45,7 +46,7 @@ const reducerFunc = (state, { type, payload }) => {
     case "SAVE__CURRENT__IMAGE": {
       const result = [...state.suffeledImageArray].map((eachImage) =>
         eachImage.id === payload.id
-          ? { ...eachImage, isShow: true }
+          ? { ...eachImage, isShow: true , isDisables : true }
           : { ...eachImage }
       );
       return {
@@ -61,7 +62,7 @@ const reducerFunc = (state, { type, payload }) => {
       if (state.prevImage === state.currentImage) {
         const result = [...state.suffeledImageArray].map((eachImage) =>
           eachImage.keyToMatchImage === image.keyToMatchImage
-            ? { ...eachImage, isShow: true, isClicked: true }
+            ? { ...eachImage, isShow: true, isDisables: true }
             : { ...eachImage }
         );
 
@@ -77,7 +78,7 @@ const reducerFunc = (state, { type, payload }) => {
         const result = [...state.suffeledImageArray].map((eachImage) =>
           eachImage.keyToMatchImage === image.keyToMatchImage ||
           eachImage.keyToMatchImage === state.prevImage
-            ? { ...eachImage, isShow: false, isClicked: false }
+            ? { ...eachImage, isShow: false , isDisables : false}
             : { ...eachImage }
         );
         return {
@@ -95,6 +96,7 @@ const reducerFunc = (state, { type, payload }) => {
       return {
         ...state,
         isCompleted: result.length === 0 ? true : false,
+        currentLoad : state.currentLoad + 1,
         hideImage: result.length === 0 ? false : true,
       };
     }

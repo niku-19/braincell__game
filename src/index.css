@@ -16,6 +16,7 @@
   --container-width-sm: 100%;
   --container-width-ssm: 100%;
   --primary-color: #441306;
+  --card-color : #00C2CB;
 }
 
 html {
@@ -26,7 +27,7 @@ html {
 
 body {
   line-height: 1;
-  background-color: #1e292e;
+  background-color: #E0FEFE;
   color: whitesmoke;
 }
 
@@ -34,8 +35,6 @@ body {
   max-width: var(--container-width-lg);
   height: calc(100vh - 2rem);
   margin: 1rem auto;
-  background: url("/Image/background.png") no-repeat center center fixed;
-  background-size: 100% 100%;
 }
 
 .center {

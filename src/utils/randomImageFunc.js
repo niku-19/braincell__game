@@ -1,26 +1,17 @@
 const assembleRandomly = (arr) => {
-  const expandedArray = [];
-  const indices = [];
 
-  for (let i = 0; i < 12; i++) {
-    indices.push(i);
-  }
+  const newArr = arr.map((eachImage , i) => ({
+    img : eachImage,
+    keyToMatchImage : i + 1,
+    isShow : false,
+    isDisables: false,
+  }))
 
-  for (let i = indices.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [indices[i], indices[j]] = [indices[j], indices[i]];
-  }
+  const suffeledArray = [...newArr, ...newArr]
+    .reverse()
+    .sort(() => Math.random() - 0.5).map((eachImage , i) => ({...eachImage , id : i})) 
 
-  for (let i = 0; i < 12; i++) {
-    const originalObject = arr[indices[i] % 6];
-    const newObj = {
-      ...originalObject,
-      id: Math.floor(Math.random() * 999) + 1,
-    };
-    expandedArray.push(newObj);
-  }
-
-  return expandedArray;
+  return suffeledArray;
 };
 
 export { assembleRandomly };

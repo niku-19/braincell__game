@@ -1,0 +1,26 @@
+{
+  "Card-Flip": [
+      {
+        "imageSet":
+        [
+          "/assets/cow.png",
+          "/assets/rabbit.png",
+          "/assets/Dog.png",
+          "/assets/cat.png",
+          "/assets/camel.png",
+          "/assets/sheep.png"
+        ]
+      },
+      {
+        "imageSet":
+        [
+          "/assets/pen.jpeg",
+          "/assets/pencil.jpeg",
+          "/assets/book.jpeg",
+          "/assets/eraser.png",
+          "/assets/sharpner.jpeg",
+          "/assets/notebook.jpeg"
+        ]
+      }
+  ]
+}

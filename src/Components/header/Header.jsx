@@ -1,9 +1,10 @@
 import { BsFillPauseFill } from "react-icons/bs";
 import styles from "./Header.module.css";
-import CanvasCounter from "../canvasCounter/CanvasCounter";
 import { usePointContext } from "../../Context/pointContext";
 import PauseModal from "../PauseModal/PauseModal";
 import { useState } from "react";
+import {LuCoins} from "react-icons/lu"
+import {RiCoinsFill} from "react-icons/ri"
 
 const Header = () => {
   const { points, timer, setIsPaused } = usePointContext();
@@ -23,16 +24,17 @@ const Header = () => {
     <>
       <div className={styles.header}>
         <div className={styles.pause__btn}>
-          <BsFillPauseFill className={styles.pause__icon} onClick={openModal} />
+          <BsFillPauseFill className={styles.pause__icon}  onClick={openModal} />
         </div>
         <div className={styles.result}>
           <div className={styles.score}>
+            <RiCoinsFill className={styles.pause__icon} />
             <h2 className={styles.counter}>{points}</h2>
-            <img src="/Image/empty-coin.png" alt="empty-coin" />
+            
           </div>
           <div className={styles.timer}>
-            <h2 className={styles.counter}>{timer}</h2>
-            <CanvasCounter />
+            <LuCoins className={styles.pause__icon}/>
+            <h2 className={styles.counter}>{timer >= 60 ? `01:${timer - 60}` : `00:${timer}`}</h2>
           </div>
         </div>
       </div>

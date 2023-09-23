@@ -1,13 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useReducer, useRef } from "react";
-import { firstSetImages, secondSetImages } from "../../Data/imageDataSet";
 import styles from "./ImageGrid.module.css";
 import { assembleRandomly } from "../../utils/randomImageFunc";
 import { usePointContext } from "../../Context/pointContext";
 import { INITIAL__STATE, reducerFunc } from "../../Reduer/game-reducer";
 import { useNavigate } from "react-router-dom";
+import data from "../../Card-Flip.json"
 
 const ImageGrid = () => {
+  const cardFlipData = data['Card-Flip'];
   const { setPoints, points, setTimer, timer, isPaused } = usePointContext();
   const [state, dispatch] = useReducer(reducerFunc, INITIAL__STATE);
   const wrongAudioRef = useRef(null);
@@ -16,9 +17,12 @@ const ImageGrid = () => {
   const gameOverRef = useRef(null);
   const navigate = useNavigate();
 
-  //this useEffect works on generating the image puzzle
+
+  console.log(state)
+
+
   useEffect(() => {
-    const result = assembleRandomly(firstSetImages);
+    const result = assembleRandomly(cardFlipData[0].imageSet);
     dispatch({
       type: "SAVE__SUFFELED__IMAGE__ARRAY",
       payload: result,
@@ -26,7 +30,7 @@ const ImageGrid = () => {
   }, []);
 
   useEffect(() => {
-    const result = assembleRandomly(secondSetImages);
+    const result = assembleRandomly(cardFlipData[1].imageSet);
     if (state?.isCompleted) {
       setTimeout(() => {
         dispatch({
@@ -77,6 +81,7 @@ const ImageGrid = () => {
   }, [state.hideImage, timer, isPaused, navigate]);
 
   const handleMatchImage = (image) => {
+    console.log(image)
     if (state.prevImage === -1 && !image.isClicked) {
       dispatch({ type: "SAVE__PREV__IMAGE", payload: image });
       flipAudioRef.current.play();
@@ -103,9 +108,6 @@ const ImageGrid = () => {
     wrongAudioRef.current.play();
   };
 
-  // const playAudio = () => {
-  //
-  // };
 
   return (
     <div>
@@ -133,15 +135,16 @@ const ImageGrid = () => {
         {state.counter === 0 ? (
           <div className={styles.grid__container}>
             {state?.suffeledImageArray.map((eachImage) => (
-              <div key={eachImage.id} className={styles.image__container}>
+              <div key={eachImage.id} className={styles.card}>
                 <img
                   src={
                     !state?.hideImage || eachImage.isShow
                       ? eachImage.img
-                      : "/Image/close-stone.png"
+                      : "/assets/q1.png"
                   }
                   alt="game__pattern"
                   value={eachImage.img}
+                  className={ eachImage.isDisables ? styles.disabled__image  : styles.images}
                   onClick={
                     !state?.hideImage
                       ? () => dispatch({ type: "PICK__THE__CARD" })
@@ -150,6 +153,8 @@ const ImageGrid = () => {
                 />
               </div>
             ))}
+
+
             {state?.isCompleted && (
               <div className={styles.correct__image}>
                 <img src="/Image/right.png" alt="" />
