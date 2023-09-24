@@ -1,14 +1,14 @@
 .grid__container {
-  width: 40rem;
-  height: 35rem;
+  width: 35rem;
+  height: 25rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
   grid-gap: 1rem;
 }
 
 .card {
-  width: 8rem;
-  height: 8rem;
+  width: 7rem;
+  height: 7rem;
   border-radius: .5rem;
   background-color: var(--card-color);
   display: flex;

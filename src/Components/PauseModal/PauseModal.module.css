@@ -14,10 +14,10 @@
 
 .modal__container {
   width: 35%;
-  height: 35%;
-  background-color: #fff;
-  border-radius: 4rem;
-  box-shadow: 0 0 0 5px #fff;
+  height: 45%;
+  background-color: #E0FEFE;
+  border-radius: 1rem;
+  box-shadow: 0 0 0 10px var(--card-color);
   position: fixed;
   top: 50%;
   left: 50%;
@@ -31,7 +31,7 @@
 }
 
 .modal__header {
-  color: #7d7b7b;
+  color: var(--primary-color);
   text-align: center;
   text-transform: uppercase;
   font-size: 1rem;
@@ -39,7 +39,7 @@
 }
 
 .modal__body {
-  color: #717070;
+  color: var(--primary-color);
   text-align: center;
   text-transform: capitalize;
   font-size: 0.8rem;
@@ -50,31 +50,35 @@
 }
 
 .modal__footer {
-  position: absolute;
-  bottom: -2rem;
-  left: 0;
-  right: 0;
+  width: 100%;
+  height: max-content;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
-  gap: 1rem;
 }
 
+
 .play__image__container {
-  background-color: #6fbe44;
+  background-color: var(--card-color);
   width: 4.5rem;
   height: 4.5rem;
-  border: 5px solid whitesmoke;
+  border: 5px solid #1e1e1e;
   border-radius: 1rem;
-  margin-top: 1.5rem;
 }
 .reset__image__container {
-  background-color: rgb(232, 193, 20);
+  background-color: var(--card-color);
   width: 4.5rem;
   height: 4.5rem;
-  border: 5px solid whitesmoke;
+  border: 5px solid #1e1e1e;
   border-radius: 1rem;
-  margin-top: 1.5rem;
+}
+
+
+@media screen and (max-width : 992) {
+  .modal__container {
+    width: 60%;
+    height: 20%;
+  }
 }
 
 @media screen and (max-width: 600px) {
